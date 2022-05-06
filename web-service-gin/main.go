@@ -7,10 +7,11 @@ import (
 )
 
 type album struct {
-	ID     string  `json:"id"`
-	Title  string  `json:"title"`
-	Artist string  `json:"artist"`
-	Price  float64 `json:"price"`
+	ID       string  `json:"id"`
+	Title    string  `json:"title"`
+	Artist   string  `json:"artist,omitempty"`
+	Price    float64 `json:"price"`
+	Password string  `json:"-"`
 }
 
 var albums = []album{
@@ -26,7 +27,7 @@ func main() {
 	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbums)
 
-	router.Run("localhost:8080")
+	router.Run()
 }
 
 func getAlbums(c *gin.Context) {
