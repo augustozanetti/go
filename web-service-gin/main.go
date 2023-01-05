@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,11 +22,16 @@ var albums = []album{
 }
 
 func main() {
+	serviceName := os.Getenv("service")
 	router := gin.Default()
 
 	router.GET("/albums", getAlbums)
 	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbums)
+
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, serviceName)
+	})
 
 	router.Run()
 }
